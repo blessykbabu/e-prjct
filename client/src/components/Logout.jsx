@@ -10,7 +10,7 @@ export function Logout() {
     const handleLogout = async () => {
       try {
         const token = localStorage.getItem('token');
-        console.log('Token before removal:', token);
+        // console.log('Token before removal:', token);
         const response = await axios.post(
           'http://localhost:3000/logout',
           {},

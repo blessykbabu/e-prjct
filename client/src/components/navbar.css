@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&family=Tektur:wght@600;900&display=swap');
 
-.s_logonav h3{
+.s_logonav h4{
     background-color: rgb(26, 80, 173);
     border: 2px dotted black;
     border-radius:50%;
@@ -13,8 +13,8 @@
     align-items: center;
     justify-content: center;
     overflow: hidden; 
-    height: 40px;
-    width:90px;
+    height: 35px;
+    width:60px;
     
 }
 

@@ -13,7 +13,7 @@ export default function Products() {
   useEffect(() => {
     try {
       const token = localStorage.getItem("token");
-      console.log("token in shop",token)
+      // console.log("token in shop",token)
       axios
         .get(
           `http://localhost:3000/fetch/products?page=${currentPage}&pageSize=${pageSize}`,
@@ -67,7 +67,8 @@ export default function Products() {
                   <div className="col-md-3" key={index}>
                   <div className="card mb-3">
                       {/* <img src={`http://localhost:3000/uploads/products/}`} height={300} className="card-img-top" alt="..." /> */}
-                       <img src={list.pimage} height={300}/>
+                       {/* <img src={`http://localhost:3000/uploads/products/${list.pimage}`}height={300}/> */}
+                      <img src={list.pimage} height={300}/>
                       <div className="card-body">
                         <h5 className="card-title">{list.name}</h5>
                         <p className="card-text"><span className="text-warning">$</span>{list.price}</p>
@@ -77,7 +78,7 @@ export default function Products() {
                           onClick={() => handleOrderClick(list)}
                           className="btn btn-primary"
                         >
-                          Order
+                          View
                         </button>
                            
 

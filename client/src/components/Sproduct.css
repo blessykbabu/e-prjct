@@ -1,0 +1,36 @@
+.inner-div{
+    color: red;
+    border:3px solid white;
+    background-color:rgb(203, 203, 240);
+    padding: 20px;
+    display: inline;
+    
+   
+}
+
+.empty{
+    /* width: 100px;
+    height: 100px;
+    background-color: #3498db; */
+    position: relative;
+    /* border: 3px dotted white; */
+    display: inline;
+    /* background-color: rgb(149, 190, 108); */
+    animation: moveRight 5s ease-in-out infinite;
+}
+@keyframes moveRight {
+    /* 0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(100%);
+      } */
+      0% {
+        transform: translateY(-100%);
+      }
+      100% {
+        transform: translateY(100%); 
+      }
+   
+    }
+  

@@ -1,6 +1,7 @@
 // .............................yup.......................
 import React from "react";
-import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useState,useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Link } from "react-router-dom";
 import { object, string, number } from "yup";
@@ -9,11 +10,45 @@ import Loading from "./Loading";
 import ErrorComponent from "../components/ErrorComponent";
 import SuccessComponent from "../components/SuccessComponent";
 export default function NewProduct() {
+  
+
   const [serverSuccess, setServerSuccess] = useState("");
   const [serverError, setServeError] = useState("");
   const [validationMsg, setvalidationMsg] = useState("");
   const [backendError, setbackendError] = useState({});
   const [loading, setLoading] = useState();
+  const[userData,setuserData]=useState({});
+  useEffect(() => {
+    getprofile();
+  }, []);
+  const getprofile = async () => {
+    try {
+      // console.log("call getprofile in seller");
+      const token = localStorage.getItem("token");
+      // console.log("token:", token);
+
+      const response = await axios.get(
+        "http://localhost:3000/user/profile",
+
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setuserData(response.data.data);
+      // console.log("userid:", response.data.data._id);
+    } catch(error) {
+      if (error.response && error.response.status === 404) {
+        //  not found error
+        console.log("user not  found");
+      } else {
+        console.error("Error fetching  details:", error);
+      }
+    }
+  };
+  var sid=userData._id;
+//  console.log("seller id:",sid)
 
   const handleNameChange = (e, setFieldValue) => {
     const name = e.target.value;
@@ -76,11 +111,11 @@ export default function NewProduct() {
       
       const token = localStorage.getItem("token");
       const userId = localStorage.getItem("_id"); 
-      console.log("user id:",userId)
-      console.log("values in product:",values);
+      // console.log("user id:",userId)
+      // console.log("values in product:",values);
       // const img = await convertToBase64(e.target[6].files[0]);
       const response = await axios.post(
-        "http://localhost:3000/addproduct",
+        `http://localhost:3000/addproduct?sid=${sid}`,
         
         values,
        

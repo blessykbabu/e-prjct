@@ -4,9 +4,9 @@ import { useParams } from "react-router-dom";
 
 export default function Order() {
   const { id } = useParams("");
-  console.log("user id get:",id)
+  // console.log("user id get:",id)
 
-
+const[empty,setempty]=useState(false);
 const [orderProducts, setOrderProducts] = useState([]);
  
   
@@ -28,6 +28,9 @@ const [orderProducts, setOrderProducts] = useState([]);
         );
         console.log(response.data.data); 
         setOrderProducts(response.data.data);
+        if((response.data.data).length == 0){
+          setempty(true);
+        }
       } catch (error) {
         if (error.response && error.response.status === 404) {
           //  not found error
@@ -38,15 +41,31 @@ const [orderProducts, setOrderProducts] = useState([]);
       }
   };
 
-
+  const Delete = async (id) =>{
+    try {
+      const token = localStorage.getItem("token");
+        const response = await axios.delete(
+          `http://localhost:3000/delete/order/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        getOrder();
+        alert("Order canceled")
+    } catch (error) {
+      console.log("error:",error)
+    }
+  }
   
   return (
     <>
      {/* <h3 >My Orders</h3> */}
       <div className="container">
        
-      <h3  style={{textAlign:"center"}}>My Orders</h3>
-          
+      <h3  style={{textAlign:"center",color:"gray"}}>My Orders</h3>
+      {empty && <div className="empty text-center m-4"><div className="inner-div">You have not placed any orders yet</div></div>}
           {orderProducts.map((item) => {
             return(
           <div key={item._id} className="mb-3">
@@ -61,18 +80,18 @@ const [orderProducts, setOrderProducts] = useState([]);
                     alt="..."
                   />
                   <div className="card-body">
-                    <h5 className="card-title">name {item.pid.name}</h5>
+                    <h5 className="card-title"> {item.pid.name}</h5>
                     <p className="card-text"> ${item.pid.price}
                       <span className="text-warning"></span>
                      
                     </p>
 
-                    {/* <button
-                      // onClick={() => handleOrderClick(list)}
+                    <button
+                      onClick={() => Delete(item.pid._id)} 
                       className="btn btn-primary"
                     >
-                      Order
-                    </button> */}
+                      Cancel
+                    </button>
                   </div>
                 </div>
               </div>

@@ -127,6 +127,7 @@ export default function Registration() {
                         className="shadow-lg bg-body rounded text-center"
                         style={{ backgroundColor: "white", opacity: 0.75 }}
                       >
+
                         <div
                           className="mb-3 "
                           style={{ padding: 10, color: "red" }}

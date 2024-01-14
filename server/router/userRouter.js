@@ -20,6 +20,12 @@ router.get('/fetch/cart/:id',setAccessControl('*'),userControler.fetchCart);
 router.post('/add/order',setAccessControl('*'),userControler.addOrder);
 router.get('/fetch/order/:id',setAccessControl('*'),userControler.fetchOrder);
 router.delete('/delete/cart/:id',setAccessControl('*'),userControler.deleteCart);
+router.delete('/delete/order/:id',setAccessControl('*'),userControler.CancelOrder);
+
+
+router.get('/seller/product/:id',setAccessControl('3'),userControler.sellerProduct);
+router.get('/user/list',setAccessControl('1'),userControler.viewUser);
+router.get('all/product/details/:id',setAccessControl('1'),userControler.Product_management)
 
 
 

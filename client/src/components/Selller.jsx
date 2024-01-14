@@ -1,5 +1,6 @@
-import react, { useState } from "react";
+import react, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import "./Home.css";
 import "./profile-icon.css";
 import "./seller.css";
@@ -19,9 +20,11 @@ import Icon from "./Icon";
 import Profile from "./profile";
 import NewProduct from "./NewProduct";
 import ResetPassword from "./ResetPassword";
-export default function Seller() {
+function Seller() {
   const [selectedComponent, setSelectedComponent] = useState(null);
   const [selecteIcon, setSelecteIcon] = useState(null);
+  const [userData, setuserData] = useState({});
+
   const handleLinkClick = (component) => {
     setSelectedComponent(null);
     setSelectedComponent(component);
@@ -30,6 +33,37 @@ export default function Seller() {
     setSelecteIcon(null); // Reset previous component
     setSelecteIcon(component); // Set the new component
   };
+  useEffect(() => {
+    getprofile();
+  }, []);
+  const getprofile = async () => {
+    try {
+      // console.log("call getprofile in seller");
+      const token = localStorage.getItem("token");
+      // console.log("token:", token);
+
+      const response = await axios.get(
+        "http://localhost:3000/user/profile",
+
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setuserData(response.data.data);
+      console.log("userid:", response.data.data._id);
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        //  not found error
+        console.log("user not  found");
+      } else {
+        console.error("Error fetching  details:", error);
+      }
+    }
+  };
+  var id = userData._id;
+  //  console.log("seller id log:",id)
   return (
     <>
       <div className="seller">
@@ -117,6 +151,7 @@ export default function Seller() {
                       <th scope="row"></th>
                       <td className="p-4">
                         <Link
+                          to={`/view/products/${id}`}
                           style={{ textDecoration: "none", color: "black" }}
                         >
                           View Products
@@ -147,12 +182,12 @@ export default function Seller() {
                     />
                   </div> */}
                   <div className="sQ  border border-white p-5">
-                  <div className="s-quotes  border border-white p-5">
-                    <p className="mb-0">
-                      Elevate your brand. Expand your reach. Experience success
-                      as a valued member of our seller community.
-                    </p>
-                  </div>
+                    <div className="s-quotes  border border-white p-5">
+                      <p className="mb-0">
+                        Elevate your brand. Expand your reach. Experience
+                        success as a valued member of our seller community.
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -228,3 +263,4 @@ export default function Seller() {
     </>
   );
 }
+export default Seller;

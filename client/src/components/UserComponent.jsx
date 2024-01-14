@@ -48,14 +48,14 @@ function UserComponent() {
     setSelecteIcon(null); // Reset previous component
     setSelecteIcon(component); // Set the new component
   };
-  useEffect(() => {
-    getprofile();
-  }, []);
+  // useEffect(() => {
+  //   getprofile();
+  // }, []);
   const getprofile = async () => {
     try {
-      console.log("call getprofile");
+      // console.log("call getprofile");
       const token = localStorage.getItem("token");
-      console.log("token:", token);
+      // console.log("token:", token);
 
       const response = await axios.get(
         "http://localhost:3000/user/profile",
@@ -67,7 +67,7 @@ function UserComponent() {
         }
       );
       setuserData(response.data.data);
-    } catch {
+    } catch (error){
       if (error.response && error.response.status === 404) {
         //  not found error
         console.log("user not  found");
@@ -76,7 +76,7 @@ function UserComponent() {
       }
     }
   };
-
+getprofile();
   return (
     <>
       <div className="user">

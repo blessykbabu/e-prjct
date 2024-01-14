@@ -7,9 +7,9 @@ export default function Profile() {
   }, []);
   const getprofile = async () => {
     try {
-      console.log("call getprofile");
+      // console.log("call getprofile");
       const token = localStorage.getItem("token");
-      console.log("token:", token);
+      // console.log("token:", token);
 
       const response = await axios.get(
         "http://localhost:3000/user/profile",

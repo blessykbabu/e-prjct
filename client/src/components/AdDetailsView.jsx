@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import "./product.css";
-export default function Product_Details() {
+// import "./product.css";
+export default function AdDeatailsView() {
   const { id } = useParams("");
   const [Data, setData] = useState({});
   const [userData, setuserData] = useState({});
@@ -44,7 +44,7 @@ export default function Product_Details() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `http://localhost:3000/order/product/${id}`,
+        `http://localhost:3000/all/product/details/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -61,69 +61,12 @@ export default function Product_Details() {
       }
     }
   };
-  const cart = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.post(
-        `http://localhost:3000/add/cart/?pid=${id}&uid=${uid}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setCartData(response.data.data);
-      alert("product added to the cart");
-      console.log(response.data.data);
-    } catch (error) {
-      if (error.response && error.response.status === 404) {
-        console.log("not added to cart");
-      } else {
-        console.error("Error occured:", error);
-      }
-    }
-  };
 
-  const Order = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.post(
-        `http://localhost:3000/add/order/?pid=${id}&uid=${uid}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setCartData(response.data.data);
-      alert("Thank you so much for your order! ");
-      console.log(response.data.data);
-    } catch (error) {
-      if (error.response && error.response.status === 404) {
-        console.log("your order is failed");
-      } else {
-        console.error("Error occured:", error);
-      }
-    }
-  };
 
 
   return (
     <>
-      {/* <div className="container banner ">
-        <div className="poster">
-          <div className="image-container">
-            <img src={Data.pimage} alt="Site Image" className="site-image" />
-          </div>
-          <div className="content">
-            <div className="site-title">Name: {Data.name}</div>
-            <div className="site-description">Category: {Data.category}</div>
-            <a href="#" className="button">
-              Start Shopping
-            </a>
-          </div>
-        </div>
-      </div> */}
+    
 
       <div className="container  porder m-2">
         <div className="product">
@@ -131,7 +74,7 @@ export default function Product_Details() {
           <img src={Data.pimage} height={500} width={500} />
         </div>
         <div className="prodata">
-          <table className=" mx-auto">
+          <table className=" mx-auto border border-white">
             <tbody>
               <tr>
                 <td>Name</td>

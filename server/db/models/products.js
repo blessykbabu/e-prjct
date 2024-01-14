@@ -23,7 +23,10 @@ const products = new mongoose.Schema(
     },
    pimage:{
     type:String
-   }
+   },
+   sid: {
+    type: mongoose.Schema.Types.ObjectId, ref: 'users' 
+  }
    
   },
   {

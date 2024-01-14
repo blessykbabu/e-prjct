@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "./Sproduct.css";
 import { useParams,Link } from "react-router-dom";
 
 export default function Cart() {
   const { id } = useParams("");
-  console.log("user id get:", id);
+  // console.log("user id get:", id);
   // const [userData, setuserData] = useState({});
   // const[cartData,setCartData]=useState({})
-
+const[empty,setempty]=useState(false);
   const [cartProducts, setCartProducts] = useState([]);
 
   useEffect(() => {
@@ -48,7 +49,7 @@ export default function Cart() {
     try {
       // console.log("user id inside getcart:",uid);
       const token = localStorage.getItem("token");
-      console.log("token in cart product", token);
+      // console.log("token in cart product", token);
       const response = await axios.get(
         `http://localhost:3000/fetch/cart/${id}`,
         {
@@ -59,6 +60,9 @@ export default function Cart() {
       );
       console.log(response.data.data);
       setCartProducts(response.data.data);
+      if((response.data.data).length ==0){
+        setempty(true);
+      }
     } catch (error) {
       if (error.response && error.response.status === 404) {
         //  not found error
@@ -130,6 +134,7 @@ const Delete = async (id) =>{
       <h3 style={{textAlign:"center"}}>My cart</h3>
 
         <div className="row">
+        {empty && <div className="empty text-center m-4"><div className="inner-div">Your cart is empty</div></div>}
           {cartProducts.map((item) => (
             <div key={item._id} className="col-md-3 mb-3">
               <div className="card">

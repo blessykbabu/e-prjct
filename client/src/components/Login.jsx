@@ -176,7 +176,7 @@ export default function AdminLogin() {
               
                        <div className="text-center">
                        <p>
-        <Link  style={{textDecoration:"none",color:"green"}}   to="/forgot-password">Forgot Password?</Link>
+        <Link  style={{textDecoration:"none",color:"green"}}   to="/forgot/password">Forgot Password?</Link>
       </p>
                         <button className="btn btn-primary m-3" type="submit">
                           Login

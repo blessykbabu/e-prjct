@@ -1,0 +1,10 @@
+.des-container {
+    max-height: 100px; /* Set a maximum height for the container */
+    overflow: hidden; /* Hide the overflow content */
+    transition: max-height 0.3s ease-in-out; /* Add a smooth transition effect */
+}
+
+.view-more-link {
+    cursor: pointer;
+    color: blue;
+}

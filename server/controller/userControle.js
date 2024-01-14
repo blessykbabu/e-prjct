@@ -90,7 +90,8 @@ async function newProduct(req, res) {
   try {
     // console.log("reqst body:",req.body);
     let { name, category,price, quantity,description,pimage } = req.body;
-   
+     let sid=req.query.sid;
+     console.log("seller id:",sid);
     let p_image;
     if (pimage ) {
       p_image = await fileUpload(pimage, "products");
@@ -111,6 +112,7 @@ async function newProduct(req, res) {
         quantity,
         description,
         pimage:p_image,
+        sid:sid
       });
       if (result) {
         let response = successFunction({
@@ -230,7 +232,7 @@ try {
 
 async function addCart(req, res) {
   try {
-    console.log("reached the cart  controller");
+    // console.log("reached the cart  controller");
     // console.log("reqst body:",req.body);
     let pid = req.query.pid;
     let uid=req.query.uid;
@@ -273,7 +275,7 @@ async function addCart(req, res) {
 async function userProfile(req,res){
  
   try {
-    // console.log("reached the userprofile")
+    // console.log("reached the userprofile when seller call")
     let user = req.user;
     // console.log("user:",user)
     let userDetails = await users.findOne({ _id: user.user_id },{ password: 0 });
@@ -344,13 +346,13 @@ async function fetchCart(req,res){
 
 async function addOrder(req, res) {
   try {
-    console.log("reached the order  controller");
+    // console.log("reached the order  controller");
     // console.log("reqst body:",req.body);
     let pid = req.query.pid;
     let uid=req.query.uid;
-    console.log("user id:",uid)
+    // console.log("user id:",uid)
     // let pid=req.query._id;
-    console.log("pid",pid);
+    // console.log("pid",pid);
 
     // let validationResult = await Productvalidator(req.body);
     // console.log("valiadtionResult::", validationResult);
@@ -426,9 +428,9 @@ async function fetchOrder(req,res){
 
 async function deleteCart(req,res){
   try {
-    console.log("reach delete cart");
+    // console.log("reach delete cart");
       let pid=req.params.id;
-      console.log("pid in delete cart:",pid)
+      // console.log("pid in delete cart:",pid)
     let result = await carts
       .deleteOne({pid:pid})
       .populate('pid')
@@ -461,7 +463,242 @@ async function deleteCart(req,res){
   }
 }
 
+async function sellerProduct(req,res){
+  try {
+    // console.log("reach seller produt");
+      let sid=req.params.id;
+      // console.log("sid get in fetch product:",sid)
+    let result = await products
+      .find({
+        $and: [{ sid }, { deleted: { $ne: true } }],
+      })
+      // .populate('_id')
+    //  console.log('cart result',result)
 
+ 
+    if (result) {
+      let response = successFunction({
+        statusCode: 200,
+        data: result,
+        message: "Product Recieaved",
+      });
+      return res.status(200).send(response);
+    } else {
+      let response = errorFunction({
+        statusCode: 404,
+        message: "Product not found",
+      });
+      return res.status(404).send(response);
+    }
+
+  } catch (error) {
+    console.log(error);
+
+    let response = errorFunction({
+      statusCode: 404,
+      message: "Product not found",
+    });
+    return res.status(404).send(response);
+  }
+}
+
+async function viewUser(req, res) {
+  try {
+    console.log("reached fethall");
+    let count = Number(await users.countDocuments({ deleted: { $ne: true } }));
+    const pageNumber = parseInt(req.query.page) || 1;
+    const pageSize = parseInt(req.query.pageSize) || count;
+   
+    let info = await users
+      .find(({ deleted: { $ne: true } }))
+      .sort({ _id: -1 })
+      .skip(pageSize * (pageNumber - 1))
+      .limit(pageSize);
+      
+
+    // return res.json(info);
+    if (info) {
+      let total_pages = Math.ceil(count / pageSize);
+      let data = {
+        count: count,
+        total_pages: total_pages,
+        currentPages: pageNumber,
+        datas: info,
+      };
+      let response = successFunction({
+        statusCode: 200,
+        data: data,
+        message: "Data Recieved",
+      });
+      return res.status(200).send(response);
+    } else {
+      let response = errorFunction({
+        statusCode: 404,
+        message: "Data not found",
+      });
+      return res.status(404).send(response);
+    }
+  } catch (error) {
+    console.log(error);
+    // return res.status(500).send("error occured");
+    let response = errorFunction({
+      statusCode: 500,
+      message: "Error occured",
+    });
+    return res.status(500).send(response);
+  }
+}
+
+
+async function Product_management(req,res){
+  try {
+    let id = req.params.id;
+    // console.log(id);
+   
+    let result = await products
+      .findOne({
+        $and: [{ _id: id }, { deleted: { $ne: true } }],
+      })
+     
+
+ 
+    if (result) {
+      let response = successFunction({
+        statusCode: 200,
+        data: result,
+        message: "Product Recieaved",
+      });
+      return res.status(200).send(response);
+    } else {
+      let response = errorFunction({
+        statusCode: 404,
+        message: "Product not found",
+      });
+      return res.status(404).send(response);
+    }
+
+  } catch (error) {
+    console.log(error);
+
+    let response = errorFunction({
+      statusCode: 404,
+      message: "Product not found",
+    });
+    return res.status(404).send(response);
+  }
+}
+async function deleteUser(req, res) {
+  try {
+    console.log("rechead here");
+    const { id } = req.params;
+    let user = await users.findOne({ _id: id, deleted: { $ne: true } });
+    if (!user) {
+      //   return res.status(401).send("User not exist");
+      let response = errorFunction({
+        statusCode: 401,
+        message: "User not exist",
+      });
+      return res.status(401).send(response);
+    } else {
+      const result = await users.updateOne(
+        { _id: id },
+        { $set: { deleted: true, deletedAt: new Date() } }
+      );
+      // const result=await users.deleteOne({_id:id});
+      // return res.json(result);
+      let response = successFunction({
+        statusCode: 200,
+        data: result,
+        message: "Deleted",
+      });
+      return res.status(200).send(response);
+    }
+  } catch (error) {
+    console.log(error);
+    // return res.status(500).send("error occured");
+    let response = errorFunction({
+      statusCode: 500,
+      message: "Error  occured",
+    });
+    return res.status(500).send(response);
+  }
+}
+
+
+async function deleteProduct(req, res) {
+  try {
+    console.log("rechead here");
+    const { id } = req.params;
+    let user = await products.findOne({ _id: id, deleted: { $ne: true } });
+    if (!user) {
+      //   return res.status(401).send("User not exist");
+      let response = errorFunction({
+        statusCode: 401,
+        message: "User not exist",
+      });
+      return res.status(401).send(response);
+    } else {
+      const result = await users.updateOne(
+        { _id: id },
+        { $set: { deleted: true, deletedAt: new Date() } }
+      );
+      // const result=await users.deleteOne({_id:id});
+      // return res.json(result);
+      let response = successFunction({
+        statusCode: 200,
+        data: result,
+        message: "Deleted",
+      });
+      return res.status(200).send(response);
+    }
+  } catch (error) {
+    console.log(error);
+    // return res.status(500).send("error occured");
+    let response = errorFunction({
+      statusCode: 500,
+      message: "Error  occured",
+    });
+    return res.status(500).send(response);
+  }
+}
+
+
+async function CancelOrder(req, res) {
+  try {
+    console.log("reach cancel order");
+      let pid=req.params.id;
+      // console.log("pid in delete cart:",pid)
+    let result = await orders
+      .deleteOne({pid:pid})
+      .populate('pid')
+    //  console.log('cart result',result)
+
+ 
+    if (result) {
+      let response = successFunction({
+        statusCode: 200,
+        data: result,
+        message: "Product deleted",
+      });
+      return res.status(200).send(response);
+    } else {
+      let response = errorFunction({
+        statusCode: 404,
+        message: "Product not found",
+      });
+      return res.status(404).send(response);
+    }
+
+  } catch (error) {
+    console.log(error);
+
+    let response = errorFunction({
+      statusCode: 404,
+      message: "Product not found",
+    });
+    return res.status(404).send(response);
+  }
+}
 module.exports={
 newUser,
 newProduct,
@@ -472,5 +709,9 @@ addCart,
 fetchCart,
 addOrder,
 fetchOrder,
-deleteCart
+deleteCart,
+sellerProduct,
+viewUser,
+Product_management,
+CancelOrder
 }

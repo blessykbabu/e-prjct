@@ -17,9 +17,9 @@ export default function Navbar() {
   }, []);
   const getprofile = async () => {
     try {
-      console.log("call getprofile");
+      // console.log("call getprofile");
       const token = localStorage.getItem("token");
-      console.log("token:", token);
+      // console.log("token:", token);
 
       const response = await axios.get(
         "http://localhost:3000/user/profile",
@@ -61,7 +61,7 @@ export default function Navbar() {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="s_logonav  ">
-            <h3 >EZY</h3>
+            <h4 >EZY</h4>
           </div>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
