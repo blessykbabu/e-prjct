@@ -24,6 +24,7 @@ import AdViewUser from './components/AdViewUser';
 import Seller_Remove_Products from './components/Seller_Remove_Products';
 import Forgot_Password from './components/Forgot_Password';
 import ResetPassword from './components/ResetPassword';
+import OrderAddress from './components/orderAddress';
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -61,7 +62,7 @@ function App() {
 
            
 
-          {/* <Route path="/forgot/password" element={<ResetPassword/>} /> */}
+          <Route path="/address" element={<OrderAddress/>} />
 
 
           
