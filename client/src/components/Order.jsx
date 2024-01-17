@@ -29,6 +29,16 @@ export default function Order() {
       if (response.data.data.length == 0) {
         setempty(true);
       }
+      // if (response.data.error) {
+      //   setbackendError(response.data.error);
+      //   setErrors(response.data.error);
+      //   setvalidationMsg(response.data.message);
+      //   setServeError(true);
+      //   setServerSuccess(false);
+      // } else if (response.data.success) {
+      //   setServerSuccess(true);
+      //   setvalidationMsg(response.data.message);
+      // }
     } catch (error) {
       if (error.response && error.response.status === 404) {
         //  not found error

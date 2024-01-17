@@ -1,6 +1,7 @@
 import React from "react";
 import facebook from "../image/facebook.png";
 import insta from "../image/insta.png";
+import { Link } from "react-router-dom";
 export default function Footer(){
     return(
         <>
@@ -11,17 +12,17 @@ export default function Footer(){
             <div className="col border-end">
               <h5>CUSTOMER SERVICE</h5>
               <ul style={{listStyle:"none"}}>
-                <li >Contact Us</li>
-                <li>Sell with us</li>
-                <li>Shipping</li>
+              <Link to="/contact" style={{textDecoration:"none",color:"black"}}><li>Contact us</li></Link> 
+                {/* <li></li>
+                <li>Shipping</li> */}
               </ul>
             </div>
             <div className="col border-end">
             <h5 className="ms-4">LINKS</h5>
               <ul style={{listStyle:"none"}}>
-                <li >Contact Us</li>
-                <li>Sell with us</li>
-                <li>Shipping</li>
+                {/* <li >ABOUT</li> */}
+               <Link to="/about" style={{textDecoration:"none",color:"black"}}><li>About us</li></Link> 
+                {/* <li>Shipping</li> */}
               </ul>
             </div>
             <div className="col">

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-export default function OrderAddress(onClose) {
+export default function OrderAddress({ onPlaceOrder }) {
   const [userData, setuserData] = useState({});
- 
+  const [serverSuccess, setServerSuccess] = useState("");
+  const [validationMsg, setvalidationMsg] = useState("");
+  const [backendError, setbackendError] = useState({});
   useEffect(() => {
     getprofile();
   }, []);
@@ -52,7 +54,7 @@ export default function OrderAddress(onClose) {
               <p>{userData.address}</p>
               <p>Phone:{userData.phone}</p> */}
 
-         <button className="btn btn-primary" onClick={onClose}>Yes</button>
+         <button className="btn btn-primary" onClick={() => onPlaceOrder()}>Yes</button>
             </div>
 
           
@@ -63,6 +65,8 @@ export default function OrderAddress(onClose) {
           </div>
         </form>
       </div>
+
+     
     </>
   );
 }

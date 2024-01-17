@@ -25,6 +25,8 @@ import Seller_Remove_Products from './components/Seller_Remove_Products';
 import Forgot_Password from './components/Forgot_Password';
 import ResetPassword from './components/ResetPassword';
 import OrderAddress from './components/orderAddress';
+import About from './components/About';
+import Contact from './components/Contact';
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -62,7 +64,9 @@ function App() {
 
            
 
-          <Route path="/address" element={<OrderAddress/>} />
+          <Route path="/about" element={<About/>} />
+          <Route path="/contact" element={<Contact/>} />
+
 
 
           

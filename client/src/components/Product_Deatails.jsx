@@ -5,8 +5,12 @@ import "./product.css";
 import AlertBox from "./AlertBox";
 import AlertBox_Order from "./AlertBox_Order";
 import OrderAddress from "./orderAddress";
+import Success from "./Success";
 export default function Product_Details() {
   const { id } = useParams("");
+  // const [serverSuccess, setServerSuccess] = useState("");
+  // const [validationMsg, setvalidationMsg] = useState("");
+  // const [backendError, setbackendError] = useState({});
   const [Data, setData] = useState({});
   const [userData, setuserData] = useState({});
   const [CartData, setCartData] = useState({});
@@ -14,7 +18,6 @@ export default function Product_Details() {
   const [infoOrder, setinfoOrder] = useState(false);
   const [order, setorder] = useState(false);
   // const [showAddress, setShowAddress] = useState(true);
-
 
   useEffect(() => {
     getprofile();
@@ -36,6 +39,8 @@ export default function Product_Details() {
       );
 
       setuserData(response.data.data);
+
+     
     } catch {
       if (error.response && error.response.status === 404) {
         //  not found error
@@ -100,7 +105,7 @@ export default function Product_Details() {
 
   const Order = async () => {
     // if (setorder(true)) {
-      if (userData.usertype == "6582ce130a0dd1bc7fe48dad") {
+    if (userData.usertype == "6582ce130a0dd1bc7fe48dad") {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.post(
@@ -114,6 +119,7 @@ export default function Product_Details() {
         setCartData(response.data.data);
         alert("Thank you so much for your order! ");
         console.log(response.data.data);
+     
       } catch (error) {
         if (error.response && error.response.status === 404) {
           console.log("your order is failed");
@@ -121,21 +127,21 @@ export default function Product_Details() {
           console.error("Error occured:", error);
         }
       }
-      } else {
-        // alert("Only customers can place orders!")
-        setinfoOrder(true);
-      }
+    } else {
+      // alert("Only customers can place orders!")
+      setinfoOrder(true);
+    }
     // } else {
     //   alert("please confirm the address");
     // }
   };
-  // function click() {
-  //   if (userData.usertype == "6582ce130a0dd1bc7fe48dad") {
-  //     setorder(true);
-  //   } else {
-  //     setinfoOrder(true);
-  //   }
-  // }
+  function click() {
+    if (userData.usertype == "6582ce130a0dd1bc7fe48dad") {
+      setorder(true);
+    } else {
+      setinfoOrder(true);
+    }
+  }
 
   return (
     <>
@@ -154,7 +160,8 @@ export default function Product_Details() {
         </div>
       </div> */}
 
-      <div className="container  porder m-2">
+      <div className="container  porder m-2" >
+        
         <div className="product">
           <p style={{ color: "green" }}>Available stock {Data.quantity}</p>
           <img
@@ -162,7 +169,9 @@ export default function Product_Details() {
             height={500}
             width={500}
           />
+
         </div>
+
         <div className="prodata">
           <table className=" mx-auto">
             <tbody>
@@ -191,31 +200,48 @@ export default function Product_Details() {
                   {/* <button  onClick={Order} className="btn btn-primary m-2">Order</button> */}
                   {/* <Link to="/address"> */}
 
-                  <button onClick={Order} className="btn btn-primary m-2">
+                  <button onClick={click} className="btn btn-primary m-2">
                     Order
                   </button>
                   {/* </Link> */}
                   <button onClick={cart} className="btn btn-primary">
                     Add To Cart
                   </button>
+
                   {/* <button onClick={click} className="btn btn-primary m-2">
                     Address
                   </button> */}
                 </td>
               </tr>
             </tbody>
+            
           </table>
+          
         </div>
+        
+        
       </div>
-      {/* {order && (
-        <div>
-          <OrderAddress onClose={() => setShowAddress(false)}
-/>
-        </div>
-      )} */}
+
+     
+      {order && <OrderAddress  onPlaceOrder={Order}/>}
+       
 
       {info && <AlertBox onClose={() => setinfo(false)} />}
       {infoOrder && <AlertBox_Order onClose={() => setinfoOrder(false)} />}
+    
+      {/* {serverSuccess && (
+              <Success
+                message={validationMsg}
+                onClose={() => setServerSuccess(false)}
+              />
+            )} */}
+            {/* {backendError && (
+              <ErrorComponent
+                message={validationMsg}
+                onClose={() => setbackendError("")}
+              />
+            )} */}
+    
     </>
   );
 }

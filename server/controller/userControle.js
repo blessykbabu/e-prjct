@@ -356,8 +356,7 @@ async function addOrder(req, res) {
     // let pid=req.query._id;
     // console.log("pid",pid);
 
-    // let validationResult = await Productvalidator(req.body);
-    // console.log("valiadtionResult::", validationResult);
+   
   
       let result = await orders.create({
         pid:pid,
@@ -365,6 +364,9 @@ async function addOrder(req, res) {
        
       });
       if (result) {
+        console.log('Product ID:', pid);
+        await products.updateOne({ _id: pid }, { $inc: { quantity: -1 } });
+        console.log('Product updated successfully');
         let response = successFunction({
           statusCode: 200,
           data: result,
