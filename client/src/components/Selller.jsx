@@ -15,6 +15,12 @@ import cr1 from "../image/5.jpg";
 import cr2 from "../image/6.jpg";
 import cr4 from "../image/10.jpg";
 import cr5 from "../image/13.jpg";
+
+import s2 from "../image/s2.jpg";
+import s3 from "../image/s3.jpg";
+import s4 from "../image/s4.jpg";
+
+// import g2 from "../image/g2.jpg";
 import profile from "../image/profile.png";
 import Icon from "./Icon";
 import Profile from "./profile";
@@ -130,8 +136,8 @@ function Seller() {
                       <th scope="row"></th>
                       <td className="p-4">
                         <Link
-                         to="/seller/address"
-                         onClick={() => handleLinkClick(<Adress/>)}
+                          to="/seller/address"
+                          onClick={() => handleLinkClick(<Adress />)}
                           style={{ textDecoration: "none", color: "black" }}
                         >
                           Address
@@ -176,21 +182,41 @@ function Seller() {
                   </div>
                 </div>
                 <div className="col mb-2">
-                  {/* <div className="card " style={{ width: "18rem" }}>
-                    <img
-                      src={sale2}
-                      height={"400px"}
-                      className="d-block w-100"
-                      alt="..."
-                    />
-                  </div> */}
-                  <div className="sQ  border border-white p-5">
-                    <div className="s-quotes  border border-white p-5">
-                      <p className="mb-0">
-                        Elevate your brand. Expand your reach. Experience
-                        success as a valued member of our seller community.
-                      </p>
-                    </div>
+                  <div className="wrapper five">
+                    <span className="float-box">
+                      <h3 className="float">Today is your day! Embrace the opportunity, give your best,
+                    and let success be the result of your hard work and
+                    dedication. Your efforts as a seller matter, and you have
+                    the power to make today a stepping stone towards greater
+                    achievements.</h3>
+                    </span>
+                  </div>
+                  {/* <p
+                    style={{
+                      fontFamily: "monospace",
+                      color: "orange",
+                      fontSize: 20,
+                      textAlign: "justify",
+                    }}
+                  >
+                    Today is your day! Embrace the opportunity, give your best,
+                    and let success be the result of your hard work and
+                    dedication. Your efforts as a seller matter, and you have
+                    the power to make today a stepping stone towards greater
+                    achievements.
+                  </p> */}
+                </div>
+              </div>
+
+              <div className="row mb-2">
+                <div className="sQ  border border-white p-5">
+                  <div className="s-quotes  border border-white p-5">
+                    <p className="mb-0">
+                      Elevate your brand. Expand your reach. Experience success
+                      as a valued member of our seller community.Enhance your
+                      brand's presence, broaden your audience, and thrive as a
+                      respected contributor within our dynamic seller community.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -219,9 +245,12 @@ function Seller() {
                           Discover a world of quality products curated just for
                           you. Join us and explore the possibilities!
                         </p>
-                        <a href="#" className="cta-button">
-                          Start Selling
-                        </a>
+                     
+                        <Link
+                          to="/seller/add/product"
+                          onClick={() => handleLinkClick(<NewProduct />)}
+                          style={{ textDecoration: "none", color: "black" }}
+                          className="cta-button"> Start Selling</Link>
                       </div>
                     </div>
 
@@ -246,8 +275,8 @@ function Seller() {
                 </div> */}
                 </div>
 
-                {/* <div className="row">
-                  <div className="col mb-2">
+                <div className="row mb-2">
+                  {/* <div className="col mb-2">
                     <div className="card " style={{ width: "18rem" }}>
                       <img
                         src={sale2}
@@ -256,8 +285,64 @@ function Seller() {
                         alt="..."
                       />
                     </div>
+                  </div> */}
+                  <div
+                    id="carouselExampleControls"
+                    className="carousel slide"
+                    data-bs-ride="carousel"
+                  >
+                    <div className="carousel-inner">
+                      <div className="carousel-item active">
+                        <img
+                          src={s2}
+                          height={500}
+                          className="d-block w-100"
+                          alt="..."
+                        />
+                      </div>
+                      <div className="carousel-item">
+                        <img
+                          src={s3}
+                          height={500}
+                          className="d-block w-100"
+                          alt="..."
+                        />
+                      </div>
+                      <div className="carousel-item">
+                        <img
+                          src={s4}
+                          height={500}
+                          className="d-block w-100"
+                          alt="..."
+                        />
+                      </div>
+                    </div>
+                    <button
+                      className="carousel-control-prev"
+                      type="button"
+                      data-bs-target="#carouselExampleControls"
+                      data-bs-slide="prev"
+                    >
+                      <span
+                        className="carousel-control-prev-icon"
+                        aria-hidden="true"
+                      />
+                      <span className="visually-hidden">Previous</span>
+                    </button>
+                    <button
+                      className="carousel-control-next"
+                      type="button"
+                      data-bs-target="#carouselExampleControls"
+                      data-bs-slide="next"
+                    >
+                      <span
+                        className="carousel-control-next-icon"
+                        aria-hidden="true"
+                      />
+                      <span className="visually-hidden">Next</span>
+                    </button>
                   </div>
-                </div> */}
+                </div>
               </div>
             </div>
           </div>

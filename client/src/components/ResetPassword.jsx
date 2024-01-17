@@ -36,7 +36,6 @@ export default function ResetPassword() {
     try {
       console.log("values::", values);
       const token = localStorage.getItem("token");
-      if(token){
 
       var response = await axios.post(`http://localhost:3000/reset-password`, values,
       {
@@ -44,17 +43,10 @@ export default function ResetPassword() {
           Authorization: `Bearer ${token}`,
         },
       });
-    }
-    else{
-      var response = await axios.post(`http://localhost:3000/reset-password`, values,
-      {
-        headers: {
-          Authorization: `Bearer ${tokenFromQuery}`,
-        },
-      });
-    }
+   
+ 
       console.log("Reset password:", response.data);
-console.log("response",response)
+       console.log("response",response)
       // alert("your password is changed");
 
       if (response.data.error) {

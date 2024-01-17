@@ -188,9 +188,17 @@ getprofile();
                           <div class="description">
                             Get 20% off on selected items. Limited time offer.
                           </div>
-                          <a href="#" class="button">
+                          {/* <a href="#" class="button">
                             Shop Now
-                          </a>
+                          </a> */}
+                          <Link
+                         to="/shop"
+                         className="button"
+                          style={{ textDecoration: "none", color: "black" }}
+                        >
+                          Shop Now
+                        </Link>
+                          
                         </div>
                       </div>
                     </div>
@@ -234,9 +242,16 @@ getprofile();
                         Discover a wide range of products, exclusive deals, and
                         a seamless shopping experience.
                       </div>
-                      <a href="#" className="button">
+                      {/* <a href="#" className="button">
                         Start Shopping
-                      </a>
+                      </a> */}
+                          <Link
+                         to="/shop"
+                         className="button"
+                          style={{ textDecoration: "none", color: "black" }}
+                        >
+                          Start Shopping
+                        </Link>
                     </div>
                   </div>
 
@@ -272,9 +287,16 @@ getprofile();
                     <div class="description">
                       Get 20% off on selected items. Limited time offer.
                     </div>
-                    <a href="#" class="button">
+                    {/* <a href="#" class="button">
                       Shop Now
-                    </a>
+                    </a> */}
+                     <Link
+                         to="/shop"
+                         className="button"
+                          style={{ textDecoration: "none", color: "black" }}
+                        >
+                          Shop Now
+                        </Link>
                   </div>
                 </div>
               </div>
@@ -288,9 +310,13 @@ getprofile();
                         Discover amazing deals on a wide range of products.
                         Limited time offer.
                       </div>
-                      <a href="#" className="button btnL">
-                        Shop Now
-                      </a>
+                      <Link
+                         to="/shop"
+                         className="button"
+                          style={{ textDecoration: "none", color: "black" }}
+                        >
+                          Shop Now
+                        </Link>
                     </div>
                     <div className="image-container">
                       {/* Replace 'your_image_url' with the actual URL of your poster image */}

@@ -21,8 +21,9 @@ import Order from './components/Order';
 import SellerProducts from './components/SellerProducts';
 import AdViewProducts from './components/AdViewProducts';
 import AdViewUser from './components/AdViewUser';
-// import ResetPassword from './components/ResetPassword';
 import Seller_Remove_Products from './components/Seller_Remove_Products';
+import Forgot_Password from './components/Forgot_Password';
+import ResetPassword from './components/ResetPassword';
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -36,7 +37,9 @@ function App() {
           <Route path="/registration" element={<Registration />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout/>}/>
-          <Route path="/forgot/password" element={<ResetPassword/>}/>
+           <Route path="/forgot/password" element={<Forgot_Password/>}/>
+           <Route path="/reset/password" element={<ResetPassword/>}/>
+
 
           <Route path="/admin/dashboard/*" element={<Admin />} />
           <Route path="/viewall/products" element={<AdViewProducts/>} />

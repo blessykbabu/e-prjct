@@ -126,6 +126,10 @@ export default function Order() {
                     ${item.pid.price}
                     <span className="text-warning"></span>
                   </p>
+                  <p className="card-text">
+                  Order Placed: {item.pid.createdAt}
+                    <span className="text-warning"></span>
+                  </p>
 
                   <button
                     onClick={() => Delete(item.pid._id)}
