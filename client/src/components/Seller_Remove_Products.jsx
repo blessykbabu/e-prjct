@@ -1,18 +1,54 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams ,useNavigate} from "react-router-dom";
 import axios from "axios";
 import "./product.css";
-import AlertBox from "./AlertBox";
-import AlertBox_Order from "./AlertBox_Order";
-export default function Product_Details() {
+import Loading from "./Loading";
+import SuccessComponent from "./SuccessComponent";
+export default function Seller_Remove_Products() {
+  const navigate=useNavigate();
   const { id } = useParams("");
   const [Data, setData] = useState({});
   const [userData, setuserData] = useState({});
-  const [CartData, setCartData] = useState({});
-  const[info,setinfo]=useState(false);
-  const[infoOrder,setinfoOrder]=useState(false);
+  const[loading,setLoading]=useState(false)
+
+  const [deletedata, setDeletedata] = useState(false);
+  const [error, setError] = useState(false);
+
+  const [validationMessage, setValidationMessage] = useState();
+  const handledelete = () => {
+    
+    setDeletedata(false);
+    navigate('/seller')
+  };
 
 
+  const onDelete = async (id) => {
+    setLoading(true)
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.delete(`http://localhost:3000/userproducts/delete/${id}`,  {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );;
+      if (response.data.success) {
+        setDeletedata(true); // Set deletedata to true upon successful deletion
+        setValidationMessage(response.data.message);
+      
+      } else {
+        setError(true); // Set error in case of deletion failure
+      }
+    } catch (error) {
+      setError(true); // Set error in case of request failure
+      console.log("Error in delete", error);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 300);
+    }
+    
+  };
   useEffect(() => {
     getprofile();
     getDetails();
@@ -66,81 +102,11 @@ export default function Product_Details() {
       }
     }
   };
-  const cart = async () => {
-    console.log("type:",userData.usertype)
-    if(userData.usertype == "6582ce130a0dd1bc7fe48dad"){
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.post(
-        `http://localhost:3000/add/cart/?pid=${id}&uid=${uid}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setCartData(response.data.data);
-      alert("product added to the cart");
-      console.log(response.data.data);
-    } catch (error) {
-      if (error.response && error.response.status === 404) {
-        console.log("not added to cart");
-      } else {
-        console.error("Error occured:", error);
-      }
-    }
-  }else{
-    // alert("Only customers can add items to the cart!")
-    setinfo(true);
-  }
-  };
-
-  const Order = async () => {
-    if(userData.usertype == "6582ce130a0dd1bc7fe48dad"){
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.post(
-        `http://localhost:3000/add/order/?pid=${id}&uid=${uid}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setCartData(response.data.data);
-      alert("Thank you so much for your order! ");
-      console.log(response.data.data);
-    } catch (error) {
-      if (error.response && error.response.status === 404) {
-        console.log("your order is failed");
-      } else {
-        console.error("Error occured:", error);
-      }
-    }
-  }
-  else{
-    // alert("Only customers can place orders!")
-    setinfoOrder(true);
-  }
-  };
-
-
+  
+ 
   return (
     <>
-      {/* <div className="container banner ">
-        <div className="poster">
-          <div className="image-container">
-            <img src={Data.pimage} alt="Site Image" className="site-image" />
-          </div>
-          <div className="content">
-            <div className="site-title">Name: {Data.name}</div>
-            <div className="site-description">Category: {Data.category}</div>
-            <a href="#" className="button">
-              Start Shopping
-            </a>
-          </div>
-        </div>
-      </div> */}
+      
 
       <div className="container  porder m-2">
         <div className="product">
@@ -161,6 +127,11 @@ export default function Product_Details() {
                 <td>{Data.category}</td>
               </tr>
               <tr>
+                <td>Quantity</td>
+                <td>:</td>
+                <td>{Data.quantity}</td>
+              </tr>
+              <tr>
                 <td>Price</td>
                 <td>:</td>
                 <td>${Data.price}</td>
@@ -172,9 +143,9 @@ export default function Product_Details() {
               </tr>
               <tr>
                 <td colSpan="3" className="text-center">
-                  <button  onClick={Order} className="btn btn-primary m-2">Order</button>
-                  <button onClick={cart} className="btn btn-primary">
-                    Add To Cart
+                  <button   className="btn btn-primary m-2">Update</button>
+                  <button  className="btn btn-primary"  onClick= {() => onDelete(Data._id)}>
+                    Remove
                   </button>
                 </td>
               </tr>
@@ -182,9 +153,10 @@ export default function Product_Details() {
           </table>
         </div>
       </div>
-      {info && <AlertBox  onClose={() => setinfo(false)}/>}
-      {infoOrder && <AlertBox_Order  onClose={() => setinfoOrder(false)}/>}
 
+      {deletedata && (
+        <SuccessComponent message={validationMessage} onClose={handledelete} />
+      )}  
     </>
   );
 }

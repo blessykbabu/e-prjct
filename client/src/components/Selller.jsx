@@ -20,6 +20,7 @@ import Icon from "./Icon";
 import Profile from "./profile";
 import NewProduct from "./NewProduct";
 import ResetPassword from "./ResetPassword";
+import Adress from "./Adress";
 function Seller() {
   const [selectedComponent, setSelectedComponent] = useState(null);
   const [selecteIcon, setSelecteIcon] = useState(null);
@@ -129,6 +130,8 @@ function Seller() {
                       <th scope="row"></th>
                       <td className="p-4">
                         <Link
+                         to="/seller/address"
+                         onClick={() => handleLinkClick(<Adress/>)}
                           style={{ textDecoration: "none", color: "black" }}
                         >
                           Address

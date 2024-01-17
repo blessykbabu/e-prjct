@@ -3,6 +3,8 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Loading from "./Loading";
 import "./admin.css";
+import SuccessComponent from "./SuccessComponent";
+
 
 export default function AdViewProducts() {
   const navigate = useNavigate();
@@ -11,6 +13,18 @@ export default function AdViewProducts() {
   const [pageSize, setPageSize] = useState(10);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(true);
+
+  const [deletedata, setDeletedata] = useState(false);
+  const [error, setError] = useState(false);
+
+  const [validationMessage, setValidationMessage] = useState();
+
+ 
+  
+  const handledelete = () => {
+    
+    setDeletedata(false);
+  };
   useEffect(() => {
     try {
       const token = localStorage.getItem("token");
@@ -46,15 +60,34 @@ export default function AdViewProducts() {
     const rowProducts = lists.slice(i, i + 4);
     productsInRows.push(rowProducts);
   }
-  const handleOrderClick = (list) => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      navigate(`/order/product/${list._id}`);
-    } else {
-      // Redirect to the login page if there's no token
-      navigate("/login");
+ 
+  const onDelete = async (id) => {
+    setLoading(true)
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.delete(`http://localhost:3000/userproducts/delete/${id}`,  {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );;
+      if (response.data.success) {
+        setDeletedata(true); // Set deletedata to true upon successful deletion
+        setValidationMessage(response.data.message);
+      } else {
+        setError(true); // Set error in case of deletion failure
+      }
+      setUpdate(false);
+    } catch (error) {
+      setError(true); // Set error in case of request failure
+      console.log("Error in delete", error);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 300);
     }
   };
+  
 
   return (
     <>
@@ -68,7 +101,7 @@ export default function AdViewProducts() {
                 {rowProducts.map((list, index) => (
                   <div className="col-12 d-flex m-3" key={index}>
                     <div className="product">
-                      <img src={list.pimage} height={300} width={300} />
+                      <img src={`http://localhost:3000/${list.pimage}`} height={300} width={300} />
                     </div>
                     <div className="prodata">
                       <table className=" mx-auto">
@@ -99,7 +132,7 @@ export default function AdViewProducts() {
                           </tr>
                           <tr>
                             <td colSpan="3" className="text-center">
-                              <button className="btn btn-primary m-2">
+                              <button className="btn btn-primary m-2" onClick= {() => onDelete(list._id)}>
                                 Delete
                               </button>
                             </td>
@@ -139,6 +172,9 @@ export default function AdViewProducts() {
           </div>
         )}
       </div>
+      {deletedata && (
+        <SuccessComponent message={validationMessage} onClose={handledelete} />
+      )}  
     </>
   );
 }

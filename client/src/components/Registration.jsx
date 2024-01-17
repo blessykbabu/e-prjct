@@ -26,7 +26,7 @@ export default function Registration() {
     phone: "",
     district: "",
     category:"",
-   
+   address:"",
     password:""
     
   };
@@ -61,7 +61,7 @@ export default function Registration() {
     } finally {
       setTimeout(() => {
         setLoading(false);
-      }, 200);
+      }, 400);
     }
   };
 
@@ -109,6 +109,10 @@ export default function Registration() {
                       .min(10, "Invalid phone number,it must contain 10 digit")
                       .required("Required"),
                     district: string().required("Required"),
+                    address: string().required("Required").min(10,"The address may contain up to 10 characters"),
+                    category: string().required("Required"),
+
+
 
                     password: string().required("Required"),
                   })}
@@ -280,6 +284,41 @@ export default function Registration() {
                           </label>
                          
                         </div>
+
+
+                        <div
+                          className="mb-3"
+                          style={{ padding: 10, color: "red" }}
+                        >
+                          
+                          <label
+                            htmlFor="address"
+                            className="form-label"
+                            style={{ color: "black" }}
+                          >
+                           Address
+                            <Field
+                            type="text"
+                            id="address"
+                            name="address"
+                            className="form-control"
+                          />
+                          <ErrorMessage
+                            name="address"
+                            component="div"
+                            style={{ color: "red" }}
+                          />
+                          {backendError.address_empty && ( <div>{backendError.address_empty}</div> )}
+                           {/* {backendError.address && (
+                           <div>{backendError.address}</div>
+                           
+                          )}   */}
+
+
+                          </label>
+                         
+                        </div>
+
                         <div
                           className="mb-3"
                           style={{ padding: 10, color: "red" }}

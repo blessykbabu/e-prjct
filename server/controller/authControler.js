@@ -19,7 +19,7 @@ exports.login = async function (req, res) {
   
       if(email && password){
         let user=await users.findOne({
-          $and:[{email:email}],
+          $and:[{email:email},{ deleted: { $ne: true } }],
         })
         .populate("usertype")
         // console.log("email:",email)
@@ -209,4 +209,80 @@ exports.login = async function (req, res) {
       }
     }
   };
+
+  // exports.forgotPasswordController = async function (req, res) {
+  //   try {
+  //     let email = req.body.email;
+  
+  //     if (email) {
+  //       let user = await users.findOne({ email: email });
+  //       if (user) {
+  //         let reset_token = jwt.sign(
+  //           { user_id: user._id },
+  //           process.env.PRIVATE_KEY,
+  //           { expiresIn: "10m" }
+  //         );
+  //         let data = await users.updateOne(
+  //           { email: email },
+  //           { $set: { password_token: reset_token } }
+  //         );
+  //         if (data.matchedCount === 1 && data.modifiedCount == 1) {
+  //           let reset_link = `${process.env.FRONTEND_URL}/forgot/password?token=${reset_token}`;
+  //           let email_template = await forgotPassword(user.first_name, reset_link);
+  //           sendEmail(email, "Forgot password", email_template);
+  //           let response = successFunction({
+  //             statusCode: 200,
+  //             message: "Email sent successfully",
+  //           });
+  //           res.status(response.statusCode).send(response);
+  //           return;
+  //         } else if (data.matchedCount === 0) {
+  //           let response = errorFunction({
+  //             statusCode: 404,
+  //             message: "User not found",
+  //           });
+  //           res.status(response.statusCode).send(response);
+  //           return;
+  //         } else {
+  //           let response = errorFunction({
+  //             statusCode: 400,
+  //             message: "Password reset failed",
+  //           });
+  //           res.status(response.statusCode).send(response);
+  //           return;
+  //         }
+  //       } else {
+  //         let response = errorFunction({ statusCode: 403, message: "Forbidden" });
+  //         res.status(response.statusCode).send(response);
+  //         return;
+  //       }
+  //     } else {
+  //       let response = errorFunction({
+  //         statusCode: 422,
+  //         message: "Email is required",
+  //       });
+  //       res.status(response.statusCode).send(response);
+  //       return;
+  //     }
+  //   } catch (error) {
+  //     if (process.env.NODE_ENV == "production") {
+  //       let response = errorFunction({
+  //         statusCode: 400,
+  //         message: error
+  //           ? error.message
+  //             ? error.message
+  //             : error
+  //           : "Something went wrong",
+  //       });
+  
+  //       res.status(response.statusCode).send(response);
+  //       return;
+  //     } else {
+  //       let response = errorFunction({ statusCode: 400, message: error });
+  //       res.status(response.statusCode).send(response);
+  //       return;
+  //     }
+  //   }
+  // };
+
   

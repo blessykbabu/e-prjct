@@ -139,7 +139,7 @@ const Delete = async (id) =>{
             <div key={item._id} className="col-md-3 mb-3">
               <div className="card">
                 <img
-                  src={item.pid.pimage}
+                  src={`http://localhost:3000/${item.pid.pimage}`}
                   height={300}
                   className="card-img-top"
                   alt="..."

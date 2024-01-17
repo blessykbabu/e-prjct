@@ -3,16 +3,13 @@ const products = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
     },
     category: {
       type: String,
-      required: true,
     },
 
     price: {
       type: String,
-      required: true,
     },
 
     quantity: {
@@ -26,12 +23,19 @@ const products = new mongoose.Schema(
    },
    sid: {
     type: mongoose.Schema.Types.ObjectId, ref: 'users' 
-  }
-   
   },
-  {
-    timestamps: true,
-  }
+   
+  deleted: {
+    type: Boolean,
+    default: false,
+  },
+  deletedAt: {
+    type: Date,
+  },
+},
+{
+  timestamps: true,
+}
 );
 
 module.exports = mongoose.model("products", products);

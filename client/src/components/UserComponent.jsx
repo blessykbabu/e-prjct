@@ -18,6 +18,7 @@ import ResetPassword from "./ResetPassword";
 import Icon from "./Icon";
 import Cart from "./Cart";
 import Profile from "./profile";
+import Adress from "./Adress";
 // function Profile() {
 //   return <div>Profile Component</div>;
 // }
@@ -142,6 +143,8 @@ getprofile();
                       <th scope="row"></th>
                       <td className="p-4">
                         <Link
+                         to="/user/address"
+                         onClick={() => handleLinkClick(<Adress/>)}
                           style={{ textDecoration: "none", color: "black" }}
                         >
                           Address

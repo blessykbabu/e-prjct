@@ -1,18 +1,17 @@
-
-
 import React from "react";
-import "./login.css"
+import "./login.css";
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { object, string, number } from "yup";
 import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import {  useNavigate,Link } from "react-router-dom";
-// import SuccessComponent from "./SuccessComponent";
-// import ErrorComponent from "./ErrorComponent";
+import { useNavigate, Link } from "react-router-dom";
 // import Loading from "./Loading";
+import SucessComponent from "./SuccessComponent";
+import ErrorComponent from "./ErrorComponent";
+import SuccessComponent from "./SuccessComponent";
 
-export default function AdminLogin() {
+export default function Login() {
   const [serverSuccess, setServerSuccess] = useState("");
   const [serverError, setServeError] = useState("");
   const [validationMsg, setvalidationMsg] = useState("");
@@ -22,16 +21,15 @@ export default function AdminLogin() {
   const navigate = useNavigate();
   const initialValues = {
     email: "",
-    password:"",
-   
+    password: "",
   };
 
   const handleSubmit = async (values, { setErrors, resetForm }) => {
     try {
-      console.log("values::",values)
-      const response = await axios.post(`http://localhost:3000/login`,values);
+      console.log("values::", values);
+      const response = await axios.post(`http://localhost:3000/login`, values);
       console.log("Login:", response.data);
-      
+
       if (response.data.error) {
         setbackendError(response.data.error);
         setErrors(response.data.error);
@@ -41,33 +39,27 @@ export default function AdminLogin() {
       } else if (response.data.success) {
         setServerSuccess(true);
         setvalidationMsg(response.data.message);
-        const token=response.data.data;
-        localStorage.setItem('token',token);
-        console.log("token:",token);
+        const token = response.data.data;
+        localStorage.setItem("token", token);
+        console.log("token:", token);
 
-      if (response.data.usertype=== 'admin') {
-        navigate('/admin/dashboard')
-
-      } else if (response.data.usertype === 'buyer') {
-        navigate('/user')
-
-      }else if (response.data.usertype === 'seller') {
-        navigate('/seller')
-
-      }
-       else {
-        console.error("Unknown user:", response.data.usertype);
-      }
-
+        if (response.data.usertype === "admin") {
+          navigate("/admin/dashboard");
+        } else if (response.data.usertype === "buyer") {
+          navigate("/user");
+        } else if (response.data.usertype === "seller") {
+          navigate("/seller");
+        } else {
+          console.error("Unknown user:", response.data.usertype);
+        }
       }
       resetForm();
-      
     } catch (error) {
       console.error("Not Submitted", error);
       setServeError(true);
       // console.log("response.data.errors::",response.data.errors);
-      console.log("error",error)
-    } 
+      console.log("error", error);
+    }
   };
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -75,126 +67,138 @@ export default function AdminLogin() {
 
   return (
     <>
-      
-          
-           
-            <div className="lgfrm">
-              <div className="mx-auto col-sm-12 col-md-12 col-lg-5 justify-content-center lg-container">
-                <Formik
-                  initialValues={initialValues}
-                  onSubmit={handleSubmit}
-                  validationSchema={object().shape({
-                   
-                    email: string().email().required("Required"),
-                    password: string()
-                .required("Required")
-
-                 
-                  })}
+      <div className="lgfrm">
+        <div className="mx-auto col-sm-12 col-md-12 col-lg-5 justify-content-center lg-container">
+          <Formik
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
+            validationSchema={object().shape({
+              email: string().email().required("Required"),
+              password: string().required("Required"),
+            })}
+          >
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              isSubmitting,
+            }) => (
+              <Form>
+                <h4
+                  className="m-3"
+                  style={{ textAlign: "center", color: "gray" }}
                 >
-                  {({
-                    values,
-                    errors,
-                    touched,
-                    handleChange,
-                    handleBlur,
-                    handleSubmit,
-                    isSubmitting,
-                  }) => (
-                    <Form>
-                      <h4  className="m-3" style={{textAlign:"center",color:"gray"}}>Sign In</h4>
-                      <div
-                        className="shadow-lg bg-body rounded log-bg"
-                        style={{ backgroundColor: "white", opacity: 0.75 }}
-                      >
-                      
-                        <div className="form-group text-center">
-                          
-                          <label
-                            htmlFor="email"
-                            className="form-label"
-                            style={{ color: "black" }}
-                          >
-                            Email
-                         
-                          <Field
-                            type="email"
-                            id="email"
-                            name="email"
-                            // placeholder="Email"
-                            className="form-control"
-                          />
-                          <ErrorMessage
-                            name="email"
-                            component="div"
-                            style={{ color: "red" }}
-                          />
-                        </label> 
-                        {backendError.email_exist && (
-                            <div>{backendError.email_exist}</div>
-                          )}
-                          {backendError.email && (
-                            <div>{backendError.email}</div>
-                          )}
-                          {backendError.email_empty && (
-                            <div>{backendError.email_empty}</div>
-                          )}
-                          {backendError.email_invalid && (
-                            <div>{backendError.email_invalid}</div>
-                          )}
-                        </div>
-                        <div className="form-group text-center">
-                          
-                          <label
-                           htmlFor="password"
-                           className="form-label"
-                           style={{ color: "black" }}
-                         >
-                           Password
-                       
-                         <Field
-                           type={showPassword ? "text":"password"}
-                           id="password"
-                           name="password"
-                           // placeholder="Name"
-                           className="form-control"
-                         />
-                          <span onClick={togglePasswordVisibility}>
+                  Sign In
+                </h4>
+                <div
+                  className="shadow-lg bg-body rounded log-bg"
+                  style={{ backgroundColor: "white", opacity: 0.75 }}
+                >
+                  <div className="form-group text-center">
+                    <label
+                      htmlFor="email"
+                      className="form-label"
+                      style={{ color: "black" }}
+                    >
+                      Email
+                      <Field
+                        type="email"
+                        id="email"
+                        name="email"
+                        // placeholder="Email"
+                        className="form-control"
+                      />
+                      <ErrorMessage
+                        name="email"
+                        component="div"
+                        style={{ color: "red" }}
+                      />
+                    </label>
+                    {backendError.email_exist && (
+                      <div>{backendError.email_exist}</div>
+                    )}
+                    {backendError.email && <div>{backendError.email}</div>}
+                    {backendError.email_empty && (
+                      <div>{backendError.email_empty}</div>
+                    )}
+                    {backendError.email_invalid && (
+                      <div>{backendError.email_invalid}</div>
+                    )}
+                  </div>
+                  <div className="form-group text-center">
+                    <label
+                      htmlFor="password"
+                      className="form-label"
+                      style={{ color: "black" }}
+                    >
+                      Password
+                      <Field
+                        type={showPassword ? "text" : "password"}
+                        id="password"
+                        name="password"
+                        // placeholder="Name"
+                        className="form-control"
+                      />
+                      <span onClick={togglePasswordVisibility}>
                         {showPassword ? <FaEyeSlash /> : <FaEye />}
                       </span>
-                         <ErrorMessage
-                           name="password"
-                           component="div"
-                           style={{ color: "red" }}
-                         />
-                          </label> 
-                          
-                         {backendError.name_empty && (
-                           <div>{backendError.name_empty}</div>
-                         )}
-                       </div>
-              
-                       <div className="text-center">
-                       <p>
-        <Link  style={{textDecoration:"none",color:"green"}}   to="/forgot/password">Forgot Password?</Link>
-      </p>
-                        <button className="btn btn-primary m-3" type="submit">
-                          Login
-                        </button>
-                        </div>
-       
-                      </div>
-                    </Form>
-                  )}
-                </Formik>
-              </div>
-            </div>
-           
-          
-          
-   
+                      <ErrorMessage
+                        name="password"
+                        component="div"
+                        style={{ color: "red" }}
+                      />
+                    </label>
 
-      
+                    {backendError.name_empty && (
+                      <div>{backendError.name_empty}</div>
+                    )}
+                  </div>
+
+                  <div className="text-center">
+                    <p>
+                      <Link
+                        style={{ textDecoration: "none", color: "green" }}
+                        to="/forgot/password"
+                      >
+                        Forgot Password?
+                      </Link>
+                    </p>
+                    <p>
+                     
+                        Don't have an account?
+                        <Link
+                        style={{ textDecoration: "none"}}
+                        to="/registration"
+                      >
+                        <span style={{color:"orange"}}>Register</span> 
+                      </Link>
+                    </p>
+                    <button className="btn btn-primary m-3" type="submit">
+                      Login
+                    </button>
+                  </div>
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </div>
+      </div>
+      {serverSuccess && (
+        <SuccessComponent
+          message={validationMsg}
+        
+          onClose={() => setServerSuccess(false)}
+        />
+      )}
+    {serverError && (
+        <ErrorComponent
+          message={validationMsg}
+          onClose={() => setServeError("")}
+        />
+      )}
     </>
   );
 }

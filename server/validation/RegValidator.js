@@ -13,7 +13,11 @@ data.email=!isEmpty(data.email)?data.email:"";
 
 data.phone=!isEmpty(data.phone)?data.phone:"";
 
-data.district=!isEmpty(data.district)?data.district:"";
+
+data.category=!isEmpty(data.category)?data.category:"";
+
+data.address=!isEmpty(data.address)?data.address:"";
+
 
 
 
@@ -74,7 +78,17 @@ if(validator.isEmpty(data.district)){
 
 
 
+if(validator.isEmpty(data.category)){
+    errors.category_empty="Category is equired"
+}
 
+if(validator.isEmpty(data.address)){
+    errors.address_empty="Address is equired"
+}
+
+// if(!validator.isLength(data.address,{min:10,max:50})){
+//     errors.address="Address must be between 10 and 50"
+// }
 
 
 

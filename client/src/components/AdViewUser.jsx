@@ -2,17 +2,25 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from 'react-router-dom';
 import Loading from "./Loading";
-// import { Loadercomponnet } from "./LoaderComponnet";
-
+import SuccessComponent from "./SuccessComponent";
 export default function AdViewUser() {
   const [lists, setLists] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10); 
   const [totalPages, setTotalPages] = useState(0);
   const[loading,setLoading]=useState(true)
+
+  const [deletedata, setDeletedata] = useState(false);
+  const [error, setError] = useState(false);
+
+  const [validationMessage, setValidationMessage] = useState();
+
  
   
-  
+  const handledelete = () => {
+    
+    setDeletedata(false);
+  };
   useEffect(() => {
     try {
       const token = localStorage.getItem("token");
@@ -39,6 +47,35 @@ export default function AdViewUser() {
     }
  
   }, [currentPage, pageSize,loading]);
+
+  
+   
+  const onDelete = async (id) => {
+    setLoading(true)
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.delete(`http://localhost:3000/user/delete/${id}`,  {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );;
+      if (response.data.success) {
+        setDeletedata(true); // Set deletedata to true upon successful deletion
+        setValidationMessage(response.data.message);
+      } else {
+        setError(true); // Set error in case of deletion failure
+      }
+      setUpdate(false);
+    } catch (error) {
+      setError(true); // Set error in case of request failure
+      console.log("Error in delete", error);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 300);
+    }
+  };
   
   return (
     <>
@@ -78,8 +115,9 @@ export default function AdViewUser() {
                   <td>{list.usertype}</td>
                   <td>{list.phone}</td>
                   <td>
-                    <button className="btn btn-success">
-                      <Link  style={{ textDecoration: "none", color: "white" }}>Delete</Link>
+                    <button className="btn btn-success"  onClick= {() => onDelete(list._id)}>
+                     Delete
+                    
                     </button>
                   </td>
                 </tr>
@@ -108,7 +146,10 @@ export default function AdViewUser() {
   
       )
               }
-       </div>       
+       </div>    
+       {deletedata && (
+        <SuccessComponent message={validationMessage} onClose={handledelete} />
+      )}   
     </>
   );
 }

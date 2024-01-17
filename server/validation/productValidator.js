@@ -2,7 +2,7 @@ const products=require('../db/models/products.js')
 const isEmpty=require('./isEmpty.js');
 const validator=require('validator');
  async function Productvalidator(data){
-console.log("data:::",data)
+// console.log("data:::",data)
 let errors={}
 
 

@@ -2,6 +2,7 @@
 
 const jwt = require("jsonwebtoken");
 const authControle = require("../controller/authControler");
+// const userControler=require("../controller/userControle");
 const errorFunction = require("./response-handler").errorFunction;
 const control_data=require("../utils/control-data.json");
 const user_types=require("../db/models/usertypes");
@@ -13,6 +14,7 @@ exports.accessControl = async function (access_types, req, res, next) {
     if (access_types == "*") {
       next();
     } else {
+      console.log("order")
       const authHeader = req.headers["authorization"];
       const token = authHeader ? authHeader.split(" ")[1] : null;
       if (
@@ -28,6 +30,7 @@ exports.accessControl = async function (access_types, req, res, next) {
         res.status(401).send(response);
       } else {
         //verifying token
+        console.log("else");
         jwt.verify(
           token,
           process.env.PRIVATE_KEY,
@@ -40,6 +43,8 @@ exports.accessControl = async function (access_types, req, res, next) {
               res.status(401).send(response);
             } else {
               //checking access control
+
+              console.log("ckeck acess");
               let allowed = access_types
                 .split(",")
                 .map((obj) => control_data[obj]);

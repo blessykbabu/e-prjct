@@ -4,9 +4,9 @@
   
   #card {
     position:absolute;
-    top: 85vh;
+    top: 60vh;
     width: 320px;
-    left: 80%;
+    left: 40%;
     display: block;
     /* margin: auto; */
     text-align: center;
@@ -16,11 +16,11 @@
   
   #upper-side {
     padding: 2em;
-    background-color:rgb(62, 158, 158);
+    background-color:lightblue;
     display: block;
     color: #fff;
-    border-top-right-radius: 8px;
-    border-top-left-radius: 8px;
+    border-radius: 8px;
+    /* border-top-left-radius: 8px; */
   }
   
   #checkmark {
@@ -56,7 +56,7 @@
     position: relative;
     top: 1.5em;
     text-decoration: none;
-    background:rgb(64, 135, 131);
+    background:lightblue;
     color: #fff;
     margin: auto;
     padding: .8em 3em;

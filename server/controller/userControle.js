@@ -21,7 +21,7 @@ const { sign } = jwt;
 
 async function newUser(req, res) {
   try {
-    let { name, email, phone, district,category,password } = req.body;
+    let { name, email, phone, district,category,address,password } = req.body;
     let validationResult = await Regvalidator(req.body);
     console.log("valiadtionResult::", validationResult);
     if (validationResult.isValid) {
@@ -50,6 +50,7 @@ async function newUser(req, res) {
         phone,
         district,
         category,
+        address,
         usertype:usertype,
         password:hashedPass,
       });
@@ -118,7 +119,7 @@ async function newProduct(req, res) {
         let response = successFunction({
           statusCode: 200,
           data: result,
-          message: "Product add successful",
+          message: "Product added successfully",
         });
         return res.status(200).send(response);
       } else {
@@ -147,6 +148,7 @@ async function newProduct(req, res) {
 }
 async function Fetch_products(req,res){
   try {
+  
     let count = Number(await products.countDocuments({ deleted: { $ne: true } }));
     const pageNumber = parseInt(req.query.page) || 1;
     const pageSize = parseInt(req.query.pageSize) || count;
@@ -190,10 +192,10 @@ async function Fetch_products(req,res){
 }
 
 async function FetchOne_Product(req,res){
-
+console.log("reched fetch product");
 try {
     let id = req.params.id;
-    // console.log(id);
+    console.log(id);
    
     let result = await products
       .findOne({
@@ -629,16 +631,16 @@ async function deleteProduct(req, res) {
   try {
     console.log("rechead here");
     const { id } = req.params;
-    let user = await products.findOne({ _id: id, deleted: { $ne: true } });
-    if (!user) {
+    let product = await products.findOne({ _id: id, deleted: { $ne: true } });
+    if (!product) {
       //   return res.status(401).send("User not exist");
       let response = errorFunction({
         statusCode: 401,
-        message: "User not exist",
+        message: "product not exist",
       });
       return res.status(401).send(response);
     } else {
-      const result = await users.updateOne(
+      const result = await products.updateOne(
         { _id: id },
         { $set: { deleted: true, deletedAt: new Date() } }
       );
@@ -699,6 +701,42 @@ async function CancelOrder(req, res) {
     return res.status(404).send(response);
   }
 }
+
+async function Seller_deleteProduct(req, res) {
+  try {
+    const { id } = req.params;
+    let product = await products.findOne({ _id: id, deleted: { $ne: true } });
+    if (!product) {
+      //   return res.status(401).send("User not exist");
+      let response = errorFunction({
+        statusCode: 401,
+        message: "product not exist",
+      });
+      return res.status(401).send(response);
+    } else {
+      const result = await products.updateOne(
+        { _id: id },
+        { $set: { deleted: true, deletedAt: new Date() } }
+      );
+      // const result=await users.deleteOne({_id:id});
+      // return res.json(result);
+      let response = successFunction({
+        statusCode: 200,
+        data: result,
+        message: "Deleted",
+      });
+      return res.status(200).send(response);
+    }
+  } catch (error) {
+    console.log(error);
+    // return res.status(500).send("error occured");
+    let response = errorFunction({
+      statusCode: 500,
+      message: "Error  occured",
+    });
+    return res.status(500).send(response);
+  }
+}
 module.exports={
 newUser,
 newProduct,
@@ -713,5 +751,8 @@ deleteCart,
 sellerProduct,
 viewUser,
 Product_management,
-CancelOrder
+CancelOrder,
+deleteUser,
+deleteProduct,
+Seller_deleteProduct
 }

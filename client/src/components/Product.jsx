@@ -10,6 +10,11 @@ export default function Products() {
   const [pageSize, setPageSize] = useState(10);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(true);
+
+
+
+  
+
   useEffect(() => {
     try {
       const token = localStorage.getItem("token");
@@ -47,13 +52,18 @@ export default function Products() {
   }
   const handleOrderClick = (list) => {
     const token = localStorage.getItem("token");
-    if (token) {
-      navigate(`/order/product/${list._id}`);
-    } else {
-      // Redirect to the login page if there's no token
-      navigate("/login");
-    }
-  };
+
+    
+      if (token) {
+        navigate(`/order/product/${list._id}`);
+      } else {
+        // Redirect to the login page if there's no token
+        navigate("/login");
+      }
+     }
+ 
+
+
   return (
     <>
       <div>
@@ -67,8 +77,8 @@ export default function Products() {
                   <div className="col-md-3" key={index}>
                   <div className="card mb-3">
                       {/* <img src={`http://localhost:3000/uploads/products/}`} height={300} className="card-img-top" alt="..." /> */}
-                       {/* <img src={`http://localhost:3000/uploads/products/${list.pimage}`}height={300}/> */}
-                      <img src={list.pimage} height={300}/>
+                       <img src={`http://localhost:3000/${list.pimage}`}height={300}/>
+                      {/* <img src={list.pimage} height={300}/> */}
                       <div className="card-body">
                         <h5 className="card-title">{list.name}</h5>
                         <p className="card-text"><span className="text-warning">$</span>{list.price}</p>

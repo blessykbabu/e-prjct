@@ -16,18 +16,22 @@ router.get('/fetch/products',setAccessControl('*'),userControler.Fetch_products)
 router.get('/order/product/:id',setAccessControl('*'),userControler.FetchOne_Product);
 router.post('/add/cart',setAccessControl('*'),userControler.addCart);
 router.get('/user/profile',setAccessControl('*'),auth,userControler.userProfile)
-router.get('/fetch/cart/:id',setAccessControl('*'),userControler.fetchCart);
+router.get('/fetch/cart/:id',setAccessControl('2'),userControler.fetchCart);
 router.post('/add/order',setAccessControl('*'),userControler.addOrder);
-router.get('/fetch/order/:id',setAccessControl('*'),userControler.fetchOrder);
-router.delete('/delete/cart/:id',setAccessControl('*'),userControler.deleteCart);
-router.delete('/delete/order/:id',setAccessControl('*'),userControler.CancelOrder);
+router.get('/fetch/order/:id',setAccessControl('2'),userControler.fetchOrder);
+router.delete('/delete/cart/:id',setAccessControl('2'),userControler.deleteCart);
+router.delete('/delete/order/:id',setAccessControl('2'),userControler.CancelOrder);
 
 
 router.get('/seller/product/:id',setAccessControl('3'),userControler.sellerProduct);
 router.get('/user/list',setAccessControl('1'),userControler.viewUser);
 router.get('all/product/details/:id',setAccessControl('1'),userControler.Product_management)
 
+router.delete('/user/delete/:id',setAccessControl('1'),userControler.deleteUser);
+router.delete('/userproducts/delete/:id',setAccessControl('1,3'),userControler.deleteProduct);
+router.delete('/delete/myproduct/:id',setAccessControl('3'),userControler.Seller_deleteProduct);
 
+router.get('/address',setAccessControl('*'),auth,userControler.userProfile)
 
 
 module.exports=router
