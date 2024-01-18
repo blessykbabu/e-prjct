@@ -10,6 +10,8 @@ const app = express();
 const bodyParser = require("body-parser");
 
 app.use(cors({orgin:'http://localhost:3000'}))
+app.use('/',express.static(__dirname + '/public'));
+
 app.use('/uploads',express.static(__dirname + '/uploads'));
 app.use(bodyParser.json({ limit: '100mb' }));
 app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
