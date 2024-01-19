@@ -4,7 +4,9 @@ import axios from "axios";
 import "./product.css";
 import Loading from "./Loading";
 import SuccessComponent from "./SuccessComponent";
+import urls from "../../Urls/url";
 export default function Seller_Remove_Products() {
+  const HOSTED_SERVER_URL=urls()
   const navigate=useNavigate();
   const { id } = useParams("");
   const [Data, setData] = useState({});
@@ -26,7 +28,7 @@ export default function Seller_Remove_Products() {
     setLoading(true)
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.delete(`http://localhost:3000/userproducts/delete/${id}`,  {
+      const response = await axios.delete(`${HOSTED_SERVER_URL}/userproducts/delete/${id}`,  {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -59,7 +61,7 @@ export default function Seller_Remove_Products() {
       // console.log("token:", token);
 
       const response = await axios.get(
-        "http://localhost:3000/user/profile",
+        `${HOSTED_SERVER_URL}/user/profile`,
 
         {
           headers: {
@@ -85,7 +87,7 @@ export default function Seller_Remove_Products() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `http://localhost:3000/order/product/${id}`,
+        `${HOSTED_SERVER_URL}/order/product/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -111,7 +113,7 @@ export default function Seller_Remove_Products() {
       <div className="container  porder m-2">
         <div className="product">
           <p style={{ color: "green" }}>Available stock {Data.quantity}</p>
-          <img src={`http://localhost:3000/${Data.pimage}`} height={500} width={500} />
+          <img src={`${HOSTED_SERVER_URL}/${Data.pimage}`} height={500} width={500} />
         </div>
         <div className="prodata">
           <table className=" mx-auto">

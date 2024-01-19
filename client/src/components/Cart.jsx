@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Sproduct.css";
 import { useParams,Link } from "react-router-dom";
+import urls from "../../Urls/url";
 
 export default function Cart() {
+  const HOSTED_SERVER_URL=urls();
   const { id } = useParams("");
   // console.log("user id get:", id);
   // const [userData, setuserData] = useState({});
@@ -51,7 +53,7 @@ const[empty,setempty]=useState(false);
       const token = localStorage.getItem("token");
       // console.log("token in cart product", token);
       const response = await axios.get(
-        `http://localhost:3000/fetch/cart/${id}`,
+        `${HOSTED_SERVER_URL}/fetch/cart/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -77,7 +79,7 @@ const Delete = async (id) =>{
   try {
     const token = localStorage.getItem("token");
       const response = await axios.delete(
-        `http://localhost:3000/delete/cart/${id}`,
+        `${HOSTED_SERVER_URL}/delete/cart/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -139,7 +141,7 @@ const Delete = async (id) =>{
             <div key={item._id} className="col-md-3 mb-3">
               <div className="card">
                 <img
-                  src={`http://localhost:3000/${item.pid.pimage}`}
+                  src={`${HOSTED_SERVER_URL}/${item.pid.pimage}`}
                   height={300}
                   className="card-img-top"
                   alt="..."

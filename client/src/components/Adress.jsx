@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import urls from "../../Urls/url";
 export default function Adress() {
+  const HOSTED_SERVER_URL=urls();
   const [userData, setuserData] = useState({});
   useEffect(() => {
     getprofile();
@@ -12,7 +14,7 @@ export default function Adress() {
       // console.log("token:", token);
 
       const response = await axios.get(
-        "http://localhost:3000/address",
+        `${HOSTED_SERVER_URL}/address`,
 
         {
           headers: {

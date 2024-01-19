@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 // import "./product.css";
+import urls from "../../Urls/url";
 export default function AdDeatailsView() {
+  const HOSTED_SERVER_URL=urls();
   const { id } = useParams("");
   const [Data, setData] = useState({});
   const [userData, setuserData] = useState({});
@@ -18,7 +20,7 @@ export default function AdDeatailsView() {
       // console.log("token:", token);
 
       const response = await axios.get(
-        "http://localhost:3000/user/profile",
+        `${HOSTED_SERVER_URL}/user/profile`,
 
         {
           headers: {
@@ -44,7 +46,7 @@ export default function AdDeatailsView() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `http://localhost:3000/all/product/details/${id}`,
+        `${HOSTED_SERVER_URL}/all/product/details/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

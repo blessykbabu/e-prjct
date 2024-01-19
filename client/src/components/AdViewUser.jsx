@@ -3,7 +3,9 @@ import axios from "axios";
 import { Link } from 'react-router-dom';
 import Loading from "./Loading";
 import SuccessComponent from "./SuccessComponent";
+import urls from "../../Urls/url";
 export default function AdViewUser() {
+  const HOSTED_SERVER_URL=urls();
   const [lists, setLists] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10); 
@@ -24,7 +26,7 @@ export default function AdViewUser() {
   useEffect(() => {
     try {
       const token = localStorage.getItem("token");
-      axios.get(`http://localhost:3000/user/list?page=${currentPage}&pageSize=${pageSize}`, {
+      axios.get(`${HOSTED_SERVER_URL}/user/list?page=${currentPage}&pageSize=${pageSize}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -54,7 +56,7 @@ export default function AdViewUser() {
     setLoading(true)
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.delete(`http://localhost:3000/user/delete/${id}`,  {
+      const response = await axios.delete(`${HOSTED_SERVER_URL}/user/delete/${id}`,  {
         headers: {
           Authorization: `Bearer ${token}`,
         },

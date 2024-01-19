@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams,Link } from "react-router-dom";
 import "./Sproduct.css";
+import urls from "../../Urls/url";
 export default function SellerProducts() {
   const { id } = useParams("");
+  const HOSTED_SERVER_URL=urls()
   console.log("user id get in seller:", id);
   // const [userData, setuserData] = useState({});
   // const[cartData,setCartData]=useState({})
@@ -23,7 +25,7 @@ export default function SellerProducts() {
       const token = localStorage.getItem("token");
     //   console.log("token in cart product", token);
       const response = await axios.get(
-        `http://localhost:3000/seller/product/${id}`,
+        `${HOSTED_SERVER_URL}/seller/product/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -59,7 +61,7 @@ export default function SellerProducts() {
             <div key={item._id} className="col-md-3 mb-3">
               <div className="card">
                 <img
-                  src={`http://localhost:3000/${item.pimage}`}
+                  src={`${HOSTED_SERVER_URL}/${item.pimage}`}
                   height={300}
                   className="card-img-top"
                   alt="..."

@@ -4,9 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import Loading from "./Loading";
 import "./admin.css";
 import SuccessComponent from "./SuccessComponent";
-
+import urls from "../../Urls/url";
 
 export default function AdViewProducts() {
+  const HOSTED_SERVER_URL=urls();
   const navigate = useNavigate();
   const [lists, setLists] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,7 +32,7 @@ export default function AdViewProducts() {
       // console.log("token in shop",token)
       axios
         .get(
-          `http://localhost:3000/fetch/products?page=${currentPage}&pageSize=${pageSize}`,
+          `${HOSTED_SERVER_URL}/fetch/products?page=${currentPage}&pageSize=${pageSize}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -65,7 +66,7 @@ export default function AdViewProducts() {
     setLoading(true)
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.delete(`http://localhost:3000/userproducts/delete/${id}`,  {
+      const response = await axios.delete(`${HOSTED_SERVER_URL}/userproducts/delete/${id}`,  {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -101,7 +102,7 @@ export default function AdViewProducts() {
                 {rowProducts.map((list, index) => (
                   <div className="col-12 d-flex m-3" key={index}>
                     <div className="product">
-                      <img src={`http://localhost:3000/${list.pimage}`} height={300} width={300} />
+                      <img src={`${HOSTED_SERVER_URL}/${list.pimage}`} height={300} width={300} />
                     </div>
                     <div className="prodata">
                       <table className=" mx-auto">

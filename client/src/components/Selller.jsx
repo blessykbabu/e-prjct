@@ -27,11 +27,12 @@ import Profile from "./profile";
 import NewProduct from "./NewProduct";
 import ResetPassword from "./ResetPassword";
 import Adress from "./Adress";
+import urls from "../../Urls/url";
 function Seller() {
   const [selectedComponent, setSelectedComponent] = useState(null);
   const [selecteIcon, setSelecteIcon] = useState(null);
   const [userData, setuserData] = useState({});
-
+  const HOSTED_SERVER_URL=urls()
   const handleLinkClick = (component) => {
     setSelectedComponent(null);
     setSelectedComponent(component);
@@ -50,7 +51,7 @@ function Seller() {
       // console.log("token:", token);
 
       const response = await axios.get(
-        "http://localhost:3000/user/profile",
+        `${HOSTED_SERVER_URL}/user/profile`,
 
         {
           headers: {

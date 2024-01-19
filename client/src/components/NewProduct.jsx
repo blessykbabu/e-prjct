@@ -9,9 +9,10 @@ import axios from "axios";
 import Loading from "./Loading";
 import ErrorComponent from "../components/ErrorComponent";
 import SuccessComponent from "../components/SuccessComponent";
+import urls from "../../Urls/url";
 export default function NewProduct() {
   
-
+const HOSTED_SERVER_URL=urls();
   const [serverSuccess, setServerSuccess] = useState("");
   const [serverError, setServeError] = useState("");
   const [validationMsg, setvalidationMsg] = useState("");
@@ -28,7 +29,7 @@ export default function NewProduct() {
       // console.log("token:", token);
 
       const response = await axios.get(
-        "http://localhost:3000/user/profile",
+        `${HOSTED_SERVER_URL}/user/profile`,
 
         {
           headers: {
@@ -115,7 +116,7 @@ export default function NewProduct() {
       // console.log("values in product:",values);
       // const img = await convertToBase64(e.target[6].files[0]);
       const response = await axios.post(
-        `http://localhost:3000/addproduct?sid=${sid}`,
+        `${HOSTED_SERVER_URL}/addproduct?sid=${sid}`,
         
         values,
        

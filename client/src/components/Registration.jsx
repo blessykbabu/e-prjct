@@ -14,7 +14,9 @@ import ErrorComponent from "../components/ErrorComponent";
 import SuccessComponent from "../components/SuccessComponent";
 import google from "../image/google.png";
 import facebook from "../image/facebook.png";
+import urls from "../../Urls/url";
 export default function Registration() {
+  const HOSTED_SERVER_URL=urls()
   const [serverSuccess, setServerSuccess] = useState("");
   const [serverError, setServeError] = useState("");
   const [validationMsg, setvalidationMsg] = useState("");
@@ -35,7 +37,7 @@ export default function Registration() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        "http://localhost:3000/adduser",
+        `${HOSTED_SERVER_URL}/adduser`,
         values,
      
       );

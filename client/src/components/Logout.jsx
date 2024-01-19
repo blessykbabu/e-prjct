@@ -2,8 +2,9 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import urls from '../../Urls/url';
 export function Logout() {
+  const HOSTED_SERVER_URL=urls()
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -12,7 +13,7 @@ export function Logout() {
         const token = localStorage.getItem('token');
         // console.log('Token before removal:', token);
         const response = await axios.post(
-          'http://localhost:3000/logout',
+          `${HOSTED_SERVER_URL}/logout`,
           {},
           {
             headers: {

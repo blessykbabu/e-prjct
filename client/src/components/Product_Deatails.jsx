@@ -4,9 +4,11 @@ import axios from "axios";
 import "./product.css";
 import AlertBox from "./AlertBox";
 import AlertBox_Order from "./AlertBox_Order";
-import OrderAddress from "./orderAddress";
+import OrderAddress from "./OrderAddress";
 import Success from "./Success";
+import urls from "../../Urls/url";
 export default function Product_Details() {
+  const HOSTED_SERVER_URL=urls();
   const { id } = useParams("");
   // const [serverSuccess, setServerSuccess] = useState("");
   // const [validationMsg, setvalidationMsg] = useState("");
@@ -29,7 +31,7 @@ export default function Product_Details() {
       // console.log("token:", token);
 
       const response = await axios.get(
-        "http://localhost:3000/user/profile",
+        `${HOSTED_SERVER_URL}/user/profile`,
 
         {
           headers: {
@@ -57,7 +59,7 @@ export default function Product_Details() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `http://localhost:3000/order/product/${id}`,
+        `${HOSTED_SERVER_URL}/order/product/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -80,7 +82,7 @@ export default function Product_Details() {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.post(
-          `http://localhost:3000/add/cart/?pid=${id}&uid=${uid}`,
+          `${HOSTED_SERVER_URL}/add/cart/?pid=${id}&uid=${uid}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -109,7 +111,7 @@ export default function Product_Details() {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.post(
-          `http://localhost:3000/add/order/?pid=${id}&uid=${uid}`,
+          `${HOSTED_SERVER_URL}/add/order/?pid=${id}&uid=${uid}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -165,7 +167,7 @@ export default function Product_Details() {
         <div className="product">
           <p style={{ color: "green" }}>Available stock {Data.quantity}</p>
           <img
-            src={`http://localhost:3000/${Data.pimage}`}
+            src={`${HOSTED_SERVER_URL}/${Data.pimage}`}
             height={500}
             width={500}
           />

@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link,useNavigate } from "react-router-dom";
 import Loading from "./Loading";
+import urls from "../../Urls/url";
 
 export default function Products() {
+  const HOSTED_SERVER_URL=urls()
   const navigate=useNavigate();
   const [lists, setLists] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -21,7 +23,7 @@ export default function Products() {
       // console.log("token in shop",token)
       axios
         .get(
-          `http://localhost:3000/fetch/products?page=${currentPage}&pageSize=${pageSize}`,
+          `${HOSTED_SERVER_URL}/fetch/products?page=${currentPage}&pageSize=${pageSize}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -77,7 +79,7 @@ export default function Products() {
                   <div className="col-md-3" key={index}>
                   <div className="card mb-3">
                       {/* <img src={`http://localhost:3000/uploads/products/}`} height={300} className="card-img-top" alt="..." /> */}
-                       <img src={`http://localhost:3000/${list.pimage}`}height={300}/>
+                       <img src={`${HOSTED_SERVER_URL}/${list.pimage}`}height={300}/>
                       {/* <img src={list.pimage} height={300}/> */}
                       <div className="card-body">
                         <h5 className="card-title">{list.name}</h5>

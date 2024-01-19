@@ -7,8 +7,10 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { object, string } from "yup";
 import axios from "axios";
 import { useNavigate} from "react-router-dom";
+import urls from "../../Urls/url";
 
 export default function Forgot_Password() {
+  const HOSTED_SERVER_URL=urls();
   const navigate = useNavigate();
   const [serverSuccess, setServerSuccess] = useState("");
   const [serverError, setServeError] = useState("");
@@ -25,7 +27,7 @@ export default function Forgot_Password() {
       console.log("values::", values);
       
 
-      const response = await axios.post(`http://localhost:3000/forgot-password`, values,
+      const response = await axios.post(`${HOSTED_SERVER_URL}/forgot-password`, values,
       {
         
       });

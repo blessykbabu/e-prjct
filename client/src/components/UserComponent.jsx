@@ -19,6 +19,7 @@ import Icon from "./Icon";
 import Cart from "./Cart";
 import Profile from "./profile";
 import Adress from "./Adress";
+import urls from "../../Urls/url";
 // function Profile() {
 //   return <div>Profile Component</div>;
 // }
@@ -38,6 +39,7 @@ function UserComponent() {
   // const handleLinkClick = () => {
   //   setShowComponent(true);
   // };
+  const HOSTED_SERVER_URL=urls()
   const [selectedComponent, setSelectedComponent] = useState(null);
   const [selecteIcon, setSelecteIcon] = useState(null);
   const [userData, setuserData] = useState({});
@@ -59,7 +61,7 @@ function UserComponent() {
       // console.log("token:", token);
 
       const response = await axios.get(
-        "http://localhost:3000/user/profile",
+        `${HOSTED_SERVER_URL}/user/profile`,
 
         {
           headers: {

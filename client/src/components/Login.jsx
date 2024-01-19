@@ -6,12 +6,14 @@ import { object, string, number } from "yup";
 import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate, Link } from "react-router-dom";
+import urls from "../../Urls/url";
 // import Loading from "./Loading";
 import SucessComponent from "./SuccessComponent";
 import ErrorComponent from "./ErrorComponent";
 import SuccessComponent from "./SuccessComponent";
 
 export default function Login() {
+  const HOSTED_SERVER_URL=urls();
   const [serverSuccess, setServerSuccess] = useState("");
   const [serverError, setServeError] = useState("");
   const [validationMsg, setvalidationMsg] = useState("");
@@ -27,7 +29,7 @@ export default function Login() {
   const handleSubmit = async (values, { setErrors, resetForm }) => {
     try {
       console.log("values::", values);
-      const response = await axios.post(`http://localhost:3000/login`, values);
+      const response = await axios.post(`${HOSTED_SERVER_URL}/login`, values);
       console.log("Login:", response.data);
 
       if (response.data.error) {

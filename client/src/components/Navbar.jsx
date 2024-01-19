@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 import icon1 from "../image/icon1.png";
 import icon2 from "../image/icon2.png";
 import icon3 from "../image/icon3.png";
+import urls from "../../Urls/url";
 export default function Navbar() {
+  const HOSTED_SERVER_URL=urls();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setuserData] = useState({});
   useEffect(() => {
@@ -22,7 +24,7 @@ export default function Navbar() {
       // console.log("token:", token);
 
       const response = await axios.get(
-        "http://localhost:3000/user/profile",
+        `${HOSTED_SERVER_URL}/user/profile`,
 
         {
           headers: {

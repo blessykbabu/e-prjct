@@ -5,7 +5,9 @@ import "./profile-icon.css";
 import Icon from "./Icon";
 import Profile from "./profile";
 import ResetPassword from "./ResetPassword";
+import urls from "../../Urls/url";
 export default function Admin() {
+  const HOSTED_SERVER_URL=urls();
   const [selecteIcon, setSelecteIcon] = useState(null);
   const [selectedComponent, setSelectedComponent] = useState(null);
 
@@ -25,7 +27,7 @@ export default function Admin() {
       // console.log("token:", token);
 
       const response = await axios.get(
-        "http://localhost:3000/user/profile",
+        `${HOSTED_SERVER_URL}/user/profile`,
 
         {
           headers: {

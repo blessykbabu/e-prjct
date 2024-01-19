@@ -8,8 +8,10 @@ import { object, string } from "yup";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons from a popular icon library
 import axios from "axios";
 import { useNavigate,useLocation} from "react-router-dom";
+import urls from "../../Urls/url";
 
 export default function ResetPassword() {
+  const HOSTED_SERVER_URL=urls()
   const navigate = useNavigate();
   const location = useLocation();
   const [serverSuccess, setServerSuccess] = useState("");
@@ -37,7 +39,7 @@ export default function ResetPassword() {
       console.log("values::", values);
       const token = localStorage.getItem("token");
 
-      var response = await axios.post(`http://localhost:3000/reset-password`, values,
+      var response = await axios.post(`${HOSTED_SERVER_URL}/reset-password`, values,
       {
         headers: {
           Authorization: `Bearer ${token}`,

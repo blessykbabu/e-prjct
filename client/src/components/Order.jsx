@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import "./Sproduct.css";
+import urls from "../../Urls/url";
 export default function Order() {
+  const HOSTED_SERVER_URL=urls()
   const { id } = useParams("");
   // console.log("user id get:",id)
 
@@ -17,7 +19,7 @@ export default function Order() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `http://localhost:3000/fetch/order/${id}`,
+        `${HOSTED_SERVER_URL}/fetch/order/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -53,7 +55,7 @@ export default function Order() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.delete(
-        `http://localhost:3000/delete/order/${id}`,
+        `${HOSTED_SERVER_URL}/delete/order/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -125,7 +127,7 @@ export default function Order() {
             <div key={item._id} className="col-md-3 mb-3">
               <div className="card">
                 <img
-                  src={`http://localhost:3000/${item.pid.pimage}`}
+                  src={`${HOSTED_SERVER_URL}/${item.pid.pimage}`}
                   height={300}
                   className="card-img-top"
                   alt="..."
