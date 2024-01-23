@@ -56,7 +56,7 @@ export default function OrderAddress({ onPlaceOrder }) {
               <p>{userData.address}</p>
               <p>Phone:{userData.phone}</p> */}
 
-         <button className="btn btn-primary" onClick={() => onPlaceOrder()}>Yes</button>
+         <button className="btn" style={{backgroundColor:"white",color:"black"}} onClick={() => onPlaceOrder()}>Yes</button>
             </div>
 
           

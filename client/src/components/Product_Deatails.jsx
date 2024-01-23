@@ -119,7 +119,7 @@ export default function Product_Details() {
           }
         );
         setCartData(response.data.data);
-        alert("Thank you so much for your order! ");
+        // alert("Thank you so much for your order! ");
         console.log(response.data.data);
      
       } catch (error) {
