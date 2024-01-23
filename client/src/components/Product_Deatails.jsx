@@ -70,7 +70,7 @@ export default function Product_Details() {
     } catch (error) {
       if (error.response && error.response.status === 404) {
         //  not found error
-        console.log("Product found");
+        console.log("Product not found");
       } else {
         console.error("Error fetching product details:", error);
       }
@@ -231,12 +231,12 @@ export default function Product_Details() {
       {info && <AlertBox onClose={() => setinfo(false)} />}
       {infoOrder && <AlertBox_Order onClose={() => setinfoOrder(false)} />}
     
-      {/* {serverSuccess && (
+       {serverSuccess && (
               <Success
                 message={validationMsg}
                 onClose={() => setServerSuccess(false)}
               />
-            )} */}
+            )} 
             {/* {backendError && (
               <ErrorComponent
                 message={validationMsg}
