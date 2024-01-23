@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "./product.css";
 import AlertBox from "./AlertBox";
@@ -121,7 +121,7 @@ export default function Product_Details() {
         setCartData(response.data.data);
         // alert("Thank you so much for your order! ");
         console.log(response.data.data);
-     
+        Navigate("/orders")
       } catch (error) {
         if (error.response && error.response.status === 404) {
           console.log("your order is failed");
