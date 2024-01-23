@@ -19,6 +19,7 @@ export default function Product_Details() {
   const [info, setinfo] = useState(false);
   const [infoOrder, setinfoOrder] = useState(false);
   const [order, setorder] = useState(false);
+  const [orderSuccess, setOrderSuccess] = useState(false);
   // const [showAddress, setShowAddress] = useState(true);
 
   useEffect(() => {
@@ -120,8 +121,8 @@ export default function Product_Details() {
         );
         setCartData(response.data.data);
         // alert("Thank you so much for your order! ");
+        setOrderSuccess(true);
         console.log(response.data.data);
-        Navigate("/orders")
       } catch (error) {
         if (error.response && error.response.status === 404) {
           console.log("your order is failed");
@@ -227,7 +228,11 @@ export default function Product_Details() {
      
       {order && <OrderAddress  onPlaceOrder={Order}/>}
        
-
+      {orderSuccess && (
+        <div className="success-message">
+          Order placed successfully!
+        </div>
+      )}
       {info && <AlertBox onClose={() => setinfo(false)} />}
       {infoOrder && <AlertBox_Order onClose={() => setinfoOrder(false)} />}
     
